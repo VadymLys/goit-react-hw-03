@@ -1,63 +1,41 @@
 import React, { useState, useEffect } from "react";
-import "../Feedback/Feedback";
-import "../Options/Options";
-import "../Description/Description";
-import Options from "../Options/Options";
-import Feedback from "../Feedback/Feedback";
-import Description from "../Description/Description";
+import "modern-normalize";
 import css from "../App/App.module.css";
-import Notification from "../Notification/Notification";
+import SearchBox from "../SearchBox/SearchBox";
+import PhoneBook from "../PhoneBook/PhoneBook";
+import users from "./users.json";
+import ContactList from "../ContactList/ContactList";
 
 const App = () => {
-  const [feedback, setFeedback] = useState({ good: 0, neutral: 0, bad: 0 });
+  const [contacts, setContacts] = useState(null);
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
-    const storedFeedback = window.localStorage.getItem("feedback");
-    if (storedFeedback) {
-      setFeedback(JSON.parse(storedFeedback));
+    const storedContacts = window.localStorage.getItem("contacts");
+    if (storedContacts) {
+      setContacts(JSON.parse(storedContacts));
     }
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("feedback", JSON.stringify(feedback));
-  }, [feedback]);
+    window.localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
-  const changeFeedback = (type) => {
-    setFeedback((prevFeedback) => ({
-      ...prevFeedback,
-      [type]: prevFeedback[type] + 1,
-    }));
+  const filteredContacts =
+    contacts &&
+    contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(searchValue.toLowerCase())
+    );
+
+  const handleSearch = (evt) => {
+    setSearchValue(() => evt.target.value);
   };
-
-  const handleReset = () => {
-    setFeedback({ good: 0, neutral: 0, bad: 0 });
-  };
-
-  const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
-
-  const positivePercentage = Math.round(
-    ((feedback.good + feedback.neutral) / totalFeedback) * 100
-  );
-
   return (
     <div className={css.container}>
-      <Description />
-      <Options
-        onReset={handleReset}
-        changeFeedback={changeFeedback}
-        hasFeedback={totalFeedback > 0}
-      />
-      {totalFeedback > 0 ? (
-        <Feedback
-          good={feedback.good}
-          neutral={feedback.neutral}
-          bad={feedback.bad}
-          totalFeedback={totalFeedback}
-          positivePercentage={positivePercentage}
-        />
-      ) : (
-        <Notification />
-      )}
+      <h1>Phonebook</h1>
+      <PhoneBook />
+      <SearchBox searchValue={searchValue} onChange={handleSearch} />
+      <ContactList users={users} />
     </div>
   );
 };
