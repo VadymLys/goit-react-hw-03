@@ -14,22 +14,18 @@ const PhoneBook = ({ onAdd }) => {
 
   const FeedbackSchema = Yup.object().shape({
     name: Yup.string()
+      .trim("Don't use whitespaces")
       .min(3, "Must be at least 3 characters")
       .max(50, "Must be 50 characters or less")
       .required("Required"),
-    number: Yup.number()
+    number: Yup.string()
+      .trim("Don't use whitespaces")
       .min(3, "Must be at least 3 characters")
       .max(50, "Must be 50 characters or less")
       .required("Required"),
   });
 
   const handleSumbmit = (values, actions) => {
-    // const [name, number] = evt.target.elements;
-    // const newContact = {
-    //   id: Math.ceil(Math.random() * 1000000),
-    //   name: name.value,
-    //   number: number.value,
-    // };
     onAdd(values);
     actions.resetForm();
   };
@@ -46,24 +42,24 @@ const PhoneBook = ({ onAdd }) => {
           <Field type="text" name="name" id={nameId} className={css.field} />
           <ErrorMessage
             name="name"
-            as="span"
+            component="span"
             id={`${nameId} error`}
-            className={css.red}
+            className={css.error}
           />
         </div>
         <div>
           <label htmlFor={numberId}>number</label>
           <Field
-            type="phone"
+            type="number"
             name="number"
             id={numberId}
             className={css.field}
           />
           <ErrorMessage
             name="number"
-            as="span"
+            component="span"
             id={`${numberId} error`}
-            className={css.red}
+            className={css.error}
           />
         </div>
 
