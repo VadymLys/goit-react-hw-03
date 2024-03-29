@@ -10,6 +10,17 @@
   margin-bottom: 20px;
 }
 
+.field {
+  width: 270px;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 6px;
+}
+
+.error {
+  color: red;
+}
+
 .btn {
   width: 100px;
   margin: 0 auto;

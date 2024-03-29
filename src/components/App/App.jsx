@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "modern-normalize";
 import userData from "./users.json";
 import css from "../App/App.module.css";
@@ -7,8 +7,8 @@ import PhoneBook from "../PhoneBook/PhoneBook";
 import ContactList from "../ContactList/ContactList";
 
 const App = () => {
-  const [contacts, setContacts] = useState(() =>
-    JSON.parse(window.localStorage.getItem("contacts") || JSON.parse(userData))
+  const [contacts, setContacts] = useState(
+    () => JSON.parse(window.localStorage.getItem("contacts")) || userData
   );
 
   const [searchValue, setSearchValue] = useState("");
@@ -21,6 +21,18 @@ const App = () => {
     contact.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  const addContact = (newTask) => {
+    setContacts((prevContacts) => {
+      return [...prevContacts, newTask];
+    });
+  };
+
+  const deleteContact = (taskId) => {
+    setContacts((prevContacts) => {
+      return prevContacts.filter((contact) => contact.id !== taskId);
+    });
+  };
+
   const handleSearch = (evt) => {
     setSearchValue(evt.target.value);
   };
@@ -28,9 +40,9 @@ const App = () => {
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
-      <PhoneBook />
+      <PhoneBook onAdd={addContact} />
       <SearchBox searchValue={searchValue} onChange={handleSearch} />
-      <ContactList users={filteredContacts} />
+      <ContactList users={filteredContacts} onDelete={deleteContact} />
     </div>
   );
 };
