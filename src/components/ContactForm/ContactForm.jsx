@@ -1,9 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useId } from "react";
-import css from "../PhoneBook/PhoneBook.module.css";
+import css from "../ContactForm/ContactForm.module.css";
 
-const PhoneBook = ({ onAdd }) => {
+const ContactForm = ({ onAdd }) => {
   const initialValues = {
     name: "",
     number: "",
@@ -71,4 +71,4 @@ const PhoneBook = ({ onAdd }) => {
   );
 };
 
-export default PhoneBook;
+export default ContactForm;

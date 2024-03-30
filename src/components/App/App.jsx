@@ -3,7 +3,7 @@ import "modern-normalize";
 import userData from "./users.json";
 import css from "../App/App.module.css";
 import SearchBox from "../SearchBox/SearchBox";
-import PhoneBook from "../PhoneBook/PhoneBook";
+import ContactForm from "../ContactForm/ContactForm";
 import ContactList from "../ContactList/ContactList";
 import { nanoid } from "nanoid";
 
@@ -45,7 +45,7 @@ const App = () => {
   return (
     <div className={css.container}>
       <h1>Phonebook</h1>
-      <PhoneBook onAdd={addContact} />
+      <ContactForm onAdd={addContact} />
       <SearchBox searchValue={searchValue} onChange={handleSearch} />
       <ContactList users={filteredContacts} onDelete={deleteContact} />
     </div>
