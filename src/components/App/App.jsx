@@ -5,6 +5,7 @@ import css from "../App/App.module.css";
 import SearchBox from "../SearchBox/SearchBox";
 import PhoneBook from "../PhoneBook/PhoneBook";
 import ContactList from "../ContactList/ContactList";
+import { nanoid } from "nanoid";
 
 const App = () => {
   const [contacts, setContacts] = useState(
@@ -22,8 +23,12 @@ const App = () => {
   );
 
   const addContact = (newTask) => {
+    const newContact = {
+      ...newTask,
+      id: nanoid(),
+    };
     setContacts((prevContacts) => {
-      return [...prevContacts, newTask];
+      return [...prevContacts, newContact];
     });
   };
 
